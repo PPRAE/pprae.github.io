@@ -4,8 +4,15 @@
     text-align: center;
 }
 
-.center{
-    margin: 0 auto; 
+.center-img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+}
+
+.black {
+    background-color: black;
 }
 
 
