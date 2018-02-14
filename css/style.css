@@ -1,1 +1,11 @@
-# Empty CSS file for your own CSS
+
+
+.rule-title {
+    text-align: center;
+}
+
+.center{
+    margin: 0 auto; 
+}
+
+
