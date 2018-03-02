@@ -17,7 +17,6 @@
 
         <script src='js/calendar/fullcalendar.min.js'></script>
         <script src='js/calendar/gcal.min.js'></script>
-        <script type='text/javascript' src='js/calendar/config.js'></script>        
         <link href='css/calendar/fullcalendar.min.css' rel='stylesheet' />
         <link href='css/calendar/fullcalendar.print.min.css' rel='stylesheet' media='print' />
 
@@ -35,9 +34,8 @@
                 function defaultView() {    
                     return jQuery.browser.mobile ? 'listWeek' : 'agendaWeek';
                 }
-                console.log(config);
                 $('#calendar').fullCalendar({
-                  
+            
                   header: {
                     left: 'prev,next today',
                     center: 'title',
@@ -47,18 +45,19 @@
             
                   displayEventTime: true,
 
-                  googleCalendarApiKey: config.CAL_API,
+                  googleCalendarApiKey: 'AIzaSyCRgwCIMJwEmLChoZ8Lqxc7aWGCasvRXPw',
             
                   events: {
-                    googleCalendarId: config.CAL_ID
+                    googleCalendarId: 'v4tj09u3ncep67f37tamfvo4p0@group.calendar.google.com',
+                    className: 'gcal-event'
                   },
-
+        
                   loading: function(bool) {
                     $('#loading').toggle(bool);
                   }
             
                 });
-                console.log()
+            
               });
             
             </script>
@@ -87,7 +86,8 @@
 	</head>
 	<body>
         
-          <div id='loading'>loading...</div> 
+          <div id='loading'>loading...</div>
+        
           <div id='calendar'></div>
 	</body>
 </html>
