@@ -52,6 +52,14 @@
                     googleCalendarId: 'v4tj09u3ncep67f37tamfvo4p0@group.calendar.google.com',
                     className: 'gcal-event'
                   },
+		eventRender: function(event, el) {
+        		// render the timezone offset below the event title
+			if (event.start.hasZone()) {
+          		el.find('.fc-title').after(
+            			$('<div class="tzo"/>').text(event.start.format('Z'))
+			);
+        		}
+		},
         
                   loading: function(bool) {
                     $('#loading').toggle(bool);
