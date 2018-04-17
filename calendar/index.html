@@ -7,19 +7,19 @@
 		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 		<title>PPRAE JQBX</title>
-		    <script src="js/scripts.js"></script>
-        <link href="css/style.css" rel="stylesheet">
+		    <script src="../js/scripts.js"></script>
+        <link href="../css/style.css" rel="stylesheet">
 
-        <script src='js/moment.min.js'></script>
-        <script src='js/jquery.min.js'></script>
+        <script src='../js/moment.min.js'></script>
+        <script src='../js/jquery.min.js'></script>
 
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-		    <script src="js/bootstrap.min.js"></script>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+		    <script src="../js/bootstrap.min.js"></script>
 
-        <script src='js/calendar/fullcalendar.min.js'></script>
-        <script src='js/calendar/gcal.min.js'></script>
-        <link href='css/calendar/fullcalendar.min.css' rel='stylesheet' />
-        <link href='css/calendar/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+        <script src='../js/calendar/fullcalendar.min.js'></script>
+        <script src='../js/calendar/gcal.min.js'></script>
+        <link href='../css/calendar/fullcalendar.min.css' rel='stylesheet' />
+        <link href='../css/calendar/fullcalendar.print.min.css' rel='stylesheet' media='print' />
 
         <script>
             
@@ -52,14 +52,6 @@
                     googleCalendarId: 'v4tj09u3ncep67f37tamfvo4p0@group.calendar.google.com',
                     className: 'gcal-event'
                   },
-		eventRender: function(event, el) {
-        		// render the timezone offset below the event title
-			if (event.start.hasZone()) {
-          		el.find('.fc-title').after(
-            			$('<div class="tzo"/>').text(event.start.format('Z'))
-			);
-        		}
-		},
         
                   loading: function(bool) {
                     $('#loading').toggle(bool);
@@ -94,7 +86,7 @@
 	</head>
 	<body>
 		<div class="row black">
-      <a href="https://pprae.github.io"/> 
+      <a href="../"/> 
         <img class="center-img" src="https://i.imgur.com/SzfyzVb.jpg"/>
       </a>
 			
