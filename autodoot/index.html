@@ -4,199 +4,199 @@
     <body>
         <pre style="word-wrap: break-word; white-space: pre-wrap;">
 function JukeBot() {
-var self = this;
-var updateInterval;
-var handlers = [];
-
-function executeHandlers(handlers) {
-    if (handlers) {
-        for (var i = 0; i &lt; handlers.length; i++) {
-            handlers[i].callback();
-        }
-    }
-}
-
-function getCurrentDj() {
-    var djElement = document.querySelector('.dj-queue .dj-user &gt; a');
+    var self = this;
+    var updateInterval;
+    var handlers = [];
     
-    if (!djElement) {
-        return null;
-    }
-    
-    var split = djElement.href.split(':');
-    var spotifyName = split[split.length - 1];
-    
-    var jqbxName = djElement.children[1].innerHTML;
-    
-    return {
-        spotifyName: spotifyName,
-        jqbxName: jqbxName
-    };
-};
-
-function getCurrentSong() {
-    var artistElements = document.querySelectorAll('.center-tabs .track .artists a');
-    
-    if (!artistElements) {
-        return null;
-    }
-    
-    var artists = [];
-    for (var i = 0; i &lt; artistElements.length; i++) {
-        artists.push(artistElements[i].innerText);
-    }
-    
-    return {
-        title: document.querySelector('.center-tabs .track .name a').innerText,
-        artists: artists
-    };
-};
-
-function log(message) {
-    self.log('JukeBot', message);
-}
-
-this.log = function (scriptName, message) {
-    console.error(scriptName + ' -&gt; ' + message);
-};
-
-this.upvote = function () {
-    var tub = document.querySelector('button.thumbs-up');
-    if (!tub.classList.contains('active')) {
-        tub.click();
-        setTimeout(self.upvote, 500);
-    }
-};
-
-this.downvote = function () {
-    var tdb = document.querySelector('button.thumbs-down');
-    if (!tdb.classList.contains('active')) {
-        tdb.click();
-        setTimeout(self.downvote, 500);
-    }
-};
-
-this.eventTypes = {
-    djChanged: 'djChanged',
-    songChanged: 'songChanged'
-};
-
-this.addHandler = function (id, eventType, callback) {
-    if (!this.eventTypes[eventType]) {
-        log('Cannot add a handler with the unhandled event type of "' + eventType + '"');
-        return false;
-    }
-
-    if (!handlers[eventType]) {
-        handlers[eventType] = [];
-    }
-
-    for (var i = 0; i &lt; handlers[eventType].length; i++) {
-        if (handlers[eventType][i].id === id) {
-            log('Handler for type "' + eventType + '" with an ID of "' + id + '" already exists.');
-            return false;
-        }
-    }
-
-    handlers[eventType].push({
-        id: id,
-        callback: callback
-    });
-
-    log('Handler for type "' + eventType + '" with an ID of "' + id + '" was created successfully.');
-    return true;
-};
-
-this.removeHandler = function (id, eventType) {
-    var handlerArray = handlers[eventType];
-
-    if (handlerArray) {
-        for (var i = 0; i &lt; handlerArray.length; i++) {
-            if (handlerArray[i].id == id) {
-                handlerArray.splice(i, 1);
-                log('Handler with an ID of ' + id + ' was removed successfully.');
-                return true;
+    function executeHandlers(handlers) {
+        if (handlers) {
+            for (var i = 0; i &lt; handlers.length; i++) {
+                handlers[i].callback();
             }
         }
     }
 
-    return false;
-};
-
-this.start = function () {
-    log('Script started.');
-    
-    this.currentSong = getCurrentSong();
-    this.currentDj = getCurrentDj();
-    
-    updateInterval = setInterval(function () {
-        var dj = getCurrentDj();
-        if (dj &amp;&amp; self.currentDj.jqbxName !== dj.jqbxName &amp;&amp; self.currentDj.spotifyName !== dj.spotifyName) {
-            self.currentDj = dj;
-            executeHandlers(handlers[self.eventTypes.djChanged]);
+    function getCurrentDj() {
+        var djElement = document.querySelector('.dj-queue .dj-user &gt; a');
+        
+        if (!djElement) {
+            return null;
         }
         
-        var song = getCurrentSong();
-        if (song &amp;&amp; self.currentSong.title !== song.title &amp;&amp; self.currentSong.artists.join() !== song.artists.join()) {
-            self.currentSong = song;
-            executeHandlers(handlers[self.eventTypes.songChanged]);
-        }
-    }, 100);
-};
+        var split = djElement.href.split(':');
+        var spotifyName = split[split.length - 1];
+        
+        var jqbxName = djElement.children[1].innerHTML;
+        
+        return {
+            spotifyName: spotifyName,
+            jqbxName: jqbxName
+        };
+    };
 
-this.stop = function () {
-    clearInterval(updateInterval);
-    log('Script stopped.')
-};
+    function getCurrentSong() {
+        var artistElements = document.querySelectorAll('.center-tabs .track .artists a');
+        
+        if (!artistElements) {
+            return null;
+        }
+        
+        var artists = [];
+        for (var i = 0; i &lt; artistElements.length; i++) {
+            artists.push(artistElements[i].innerText);
+        }
+        
+        return {
+            title: document.querySelector('.center-tabs .track .name a').innerText,
+            artists: artists
+        };
+    };
+
+    function log(message) {
+        self.log('JukeBot', message);
+    }
+
+    this.log = function (scriptName, message) {
+        console.error(scriptName + ' -&gt; ' + message);
+    };
+    
+    this.upvote = function () {
+        var tub = document.querySelector('button.thumbs-up');
+        if (!tub.classList.contains('active')) {
+            tub.click();
+            setTimeout(self.upvote, 500);
+        }
+    };
+
+    this.downvote = function () {
+        var tdb = document.querySelector('button.thumbs-down');
+        if (!tdb.classList.contains('active')) {
+            tdb.click();
+            setTimeout(self.downvote, 500);
+        }
+    };
+    
+    this.eventTypes = {
+        djChanged: 'djChanged',
+        songChanged: 'songChanged'
+    };
+    
+    this.addHandler = function (id, eventType, callback) {
+        if (!this.eventTypes[eventType]) {
+            log('Cannot add a handler with the unhandled event type of "' + eventType + '"');
+            return false;
+        }
+
+        if (!handlers[eventType]) {
+            handlers[eventType] = [];
+        }
+
+        for (var i = 0; i &lt; handlers[eventType].length; i++) {
+            if (handlers[eventType][i].id === id) {
+                log('Handler for type "' + eventType + '" with an ID of "' + id + '" already exists.');
+                return false;
+            }
+        }
+
+        handlers[eventType].push({
+            id: id,
+            callback: callback
+        });
+
+        log('Handler for type "' + eventType + '" with an ID of "' + id + '" was created successfully.');
+        return true;
+    };
+    
+    this.removeHandler = function (id, eventType) {
+        var handlerArray = handlers[eventType];
+
+        if (handlerArray) {
+            for (var i = 0; i &lt; handlerArray.length; i++) {
+                if (handlerArray[i].id == id) {
+                    handlerArray.splice(i, 1);
+                    log('Handler with an ID of ' + id + ' was removed successfully.');
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    };
+    
+    this.start = function () {
+        log('Script started.');
+        
+        this.currentSong = getCurrentSong();
+        this.currentDj = getCurrentDj();
+        
+        updateInterval = setInterval(function () {
+            var dj = getCurrentDj();
+            if (dj &amp;&amp; self.currentDj.jqbxName !== dj.jqbxName &amp;&amp; self.currentDj.spotifyName !== dj.spotifyName) {
+                self.currentDj = dj;
+                executeHandlers(handlers[self.eventTypes.djChanged]);
+            }
+            
+            var song = getCurrentSong();
+            if (song &amp;&amp; self.currentSong.title !== song.title &amp;&amp; self.currentSong.artists.join() !== song.artists.join()) {
+                self.currentSong = song;
+                executeHandlers(handlers[self.eventTypes.songChanged]);
+            }
+        }, 100);
+    };
+    
+    this.stop = function () {
+        clearInterval(updateInterval);
+        log('Script stopped.')
+    };
 };
 
 function AutoLiker(jukeBot) {
-const scriptName = 'AutoLiker';
-const handlerId = 'autoLiker';
+    const scriptName = 'AutoLiker';
+    const handlerId = 'autoLiker';
 
-function getFullName(dj) {
-    return dj.jqbxName + ' (' + dj.spotifyName + ')';
-}
+    function getFullName(dj) {
+        return dj.jqbxName + ' (' + dj.spotifyName + ')';
+    }
 
-this.start = function () {
-jukeBot.upvote();
-    jukeBot.addHandler(handlerId, jukeBot.eventTypes.djChanged, function () {
-    setTimeout(function() {
-        jukeBot.upvote();
-        jukeBot.log(scriptName, getFullName(jukeBot.currentDj) + ' was given a thumbs up!');
-    }, 2000);
-    });
-    jukeBot.log(scriptName, 'Script started.');
-};
+    this.start = function () {
+    jukeBot.upvote();
+        jukeBot.addHandler(handlerId, jukeBot.eventTypes.djChanged, function () {
+        setTimeout(function() {
+            jukeBot.upvote();
+            jukeBot.log(scriptName, getFullName(jukeBot.currentDj) + ' was given a thumbs up!');
+        }, 2000);
+        });
+        jukeBot.log(scriptName, 'Script started.');
+    };
 
-this.stop = function () {
-    jukeBot.removeHandler(handlerId, jukeBot.eventTypes.djChanged);
-    jukeBot.log(scriptName, 'Script stopped.');
-};
+    this.stop = function () {
+        jukeBot.removeHandler(handlerId, jukeBot.eventTypes.djChanged);
+        jukeBot.log(scriptName, 'Script stopped.');
+    };
 }
 
 function SongLogger(jukeBot) {
-const scriptName = 'Song Logger';
-const handlerId = 'songLogger';
+    const scriptName = 'Song Logger';
+    const handlerId = 'songLogger';
+    
+    function logSong() {
+        jukeBot.log(scriptName,
+                'New song detected:\n' + 
+                '\tTitle: ' + jukeBot.currentSong.title + '\n' + 
+                '\tArtists: ' + jukeBot.currentSong.artists.join(', ') + '\n' +
+                '\tDJ: ' + jukeBot.currentDj.jqbxName + ' (' + jukeBot.currentDj.spotifyName + ')');
+    }
 
-function logSong() {
-    jukeBot.log(scriptName,
-            'New song detected:\n' + 
-            '\tTitle: ' + jukeBot.currentSong.title + '\n' + 
-            '\tArtists: ' + jukeBot.currentSong.artists.join(', ') + '\n' +
-            '\tDJ: ' + jukeBot.currentDj.jqbxName + ' (' + jukeBot.currentDj.spotifyName + ')');
-}
+    this.start = function () {
+        jukeBot.addHandler(handlerId, jukeBot.eventTypes.songChanged, logSong);
+        logSong();
+        jukeBot.log(scriptName, 'Script started.');
+    };
 
-this.start = function () {
-    jukeBot.addHandler(handlerId, jukeBot.eventTypes.songChanged, logSong);
-    logSong();
-    jukeBot.log(scriptName, 'Script started.');
-};
-
-this.stop = function () {
-    jukeBot.log(scriptName, 'Script stopped.');
-    jukeBot.removeHandler(handlerId, jukeBot.eventTypes.songChanged);
-};
+    this.stop = function () {
+        jukeBot.log(scriptName, 'Script stopped.');
+        jukeBot.removeHandler(handlerId, jukeBot.eventTypes.songChanged);
+    };
 }
 
 var jukeBot = new JukeBot();
