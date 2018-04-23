@@ -1,13 +1,25 @@
 <html>
     <head>
+	<script type="application/javascript">
+	function copyCode() {
+	  /* Get the text field */
+	  var copyText = document.getElementById("copyField");
+
+	  /* Select the text field */
+	  copyText.select();
+
+	  /* Copy the text inside the text field */
+	  document.execCommand("Copy");
+	}
+	</script>
     </head>
     <body>
         <h3>Directions:</h3>
         <ul>
-            <li>Copy all text in the text box below to your clipboard.</li>
+            <li>Copy all text in the text box below to your clipboard. <button onclick="copyCode()">Copy Code to Clipboard</button></li>
         </ul>
         <!-- <pre style="word-wrap: break-word; white-space: pre-wrap;"> -->
-        <textarea rows="10" cols="100">
+        <textarea rows="10" cols="100" id="copyField">
 function JukeBot() {
     var self = this;
     var updateInterval;
